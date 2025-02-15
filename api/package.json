@@ -1,5 +1,5 @@
 {
   "dependencies": {
-    "node-html-parser": "^6.1.12"  // Aktuelle Version zum Zeitpunkt der Antwort - Version kann sich ändern, ggf. aktuelle Version suchen
+    "node-html-parser": "^6.1.12"
   }
 }
