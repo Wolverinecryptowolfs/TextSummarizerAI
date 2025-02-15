@@ -1,8 +1,8 @@
 {
     "version": 2,
     "rewrites": [
-        { "source": "/frontend/script.js", "destination": "/frontend/script.js" },  <- **Explizite Route für script.js**
-        { "source": "/frontend/style.css", "destination": "/frontend/style.css" },   <- **Explizite Route für style.css**
-        { "source": "/(.*)", "destination": "/index.html" }                         <- **Fallback für alle anderen Anfragen**
+        { "source": "/frontend/script.js", "destination": "/frontend/script.js" },  
+        { "source": "/frontend/style.css", "destination": "/frontend/style.css" },  
+        { "source": "/(.*)", "destination": "/index.html" }                        
     ]
 }
