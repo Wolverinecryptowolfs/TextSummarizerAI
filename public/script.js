@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const summarizeButton = document.getElementById('summarizeButton');
     const textInput = document.getElementById('textInput');
-    const summaryOutput = document.getElementById('summaryOutput'); // Direkt auf den Container zugreifen
+    const summaryOutput = document.getElementById('summaryOutput');
 
     summarizeButton.addEventListener('click', async () => {
         const inputText = textInput.value;
@@ -29,16 +29,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let summaryText = data.summary;
 
-            // **Absatz-Ausgabe statt Bullet Points**
+            // **Textbereinigung und Absatzstrukturierung**
+
+            // 1. Sterne (**) entfernen
+            summaryText = summaryText.replace(/\*\*/g, ''); // "**" global ersetzen durch nichts
+
+            // 2. Zeilenumbrüche in Absätze umwandeln (falls nicht schon Absätze vom API kommen)
+            const summaryParagraphs = summaryText.split("\n").filter(paragraph => paragraph.trim() !== "");
+
             summaryOutput.innerHTML = ''; // Container leeren
-            const summaryParagraph = document.createElement('p'); // <p>-Tag erstellen
-            summaryParagraph.textContent = summaryText; // Zusammenfassungstext einfügen
-            summaryOutput.appendChild(summaryParagraph); // Absatz zum Container hinzufügen
+
+            summaryParagraphs.forEach(paragraph => {
+                const summaryParagraph = document.createElement('p');
+                summaryParagraph.textContent = paragraph.trim(); // Leerzeichen am Anfang/Ende entfernen
+                summaryOutput.appendChild(summaryParagraph);
+            });
 
 
         } catch (error) {
             console.error("Error calling summarize function:", error);
-            summaryOutput.innerHTML = `<p>Error fetching summary: ${error.message || 'Unknown error. Please try again later.'}</p>`; // Fehler als Absatz ausgeben
+            summaryOutput.innerHTML = `<p>Error fetching summary: ${error.message || 'Unknown error. Please try again later.'}</p>`;
         }
     });
 });
