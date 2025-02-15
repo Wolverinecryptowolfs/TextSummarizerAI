@@ -3,33 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const textInput = document.getElementById('textInput');
     const summaryList = document.getElementById('summaryList');
 
-    summarizeButton.addEventListener('click', async () => {
+    summarizeButton.addEventListener('click', async () => { // **ASYNC HINZUGEFÜGT**
         const inputText = textInput.value;
 
-        if (!inputText.trim()) {
-            alert("Please enter text to summarize.");
-            return;
-        }
-
         try {
-            const response = await fetch('/api/summarize', { // **Aufruf der Vercel Function unter `/api/summarize`**
+            const response = await fetch('/api/summarize', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ text: inputText }) // Text im Request Body senden
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: inputText })
             });
 
-            if (!response.ok) {
-                const errorData = await response.json(); // Versuche Fehlerdetails aus JSON zu lesen
-                const errorMessage = errorData.message || `HTTP error! status: ${response.status}`; // Fallback-Fehlermeldung
-                throw new Error(errorMessage);
-            }
+            if (!response.ok) { /* ... Fehlerbehandlung ... */ }
 
             const data = await response.json();
-            console.log("Summary from API:", data); // Loggen der Antwort von der Function
+            console.log("Summary from API:", data);
 
-            const summaryText = data.summary; // Zusammenfassung aus der Antwort holen
+            const summaryText = data.summary; // Zusammenfassung aus API-Antwort
 
             const summaryPoints = summaryText.split("\n").filter(point => point.trim() !== "");
 
@@ -40,10 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 summaryList.appendChild(listItem);
             });
 
-
-        } catch (error) {
-            console.error("Error calling summarize function:", error);
-            summaryList.innerHTML = `<li>Error fetching summary: ${error.message || 'Unknown error. Please try again later.'}</li>`; // Fehler mit detaillierter Meldung anzeigen
-        }
+        } catch (error) { /* ... Fehlerbehandlung ... */ }
     });
 });
