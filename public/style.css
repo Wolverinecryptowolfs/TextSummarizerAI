@@ -1,71 +1,21 @@
-body {
-    font-family: sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
-}
+body { /* ... bisherige body-Regeln ... */ }
+.container { /* ... bisherige container-Regeln ... */ }
+h1 { /* ... bisherige h1-Regeln ... */ }
+textarea { /* ... bisherige textarea-Regeln ... */ }
+button { /* ... bisherige button-Regeln ... */ }
+button:hover { /* ... bisherige button:hover-Regeln ... */ }
+#summaryOutput { /* ... bisherige #summaryOutput-Regeln ... */ }
+#summaryOutput h2 { /* ... bisherige #summaryOutput h2-Regeln ... */ }
+#summaryOutput p { /* ... bisherige #summaryOutput p-Regeln ... */ }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-h1 {
-    text-align: center;
-    color: #333;
-}
-
-textarea {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box; /* Wichtig für Breite */
-    font-family: sans-serif; /* Einheitliche Schrift */
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #5cb85c; /* Grün */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background-color: #4cae4c; /* Dunkleres Grün */
-}
-
-#summaryOutput {
+/* **VERBESSERTE CSS-REGELN FÜR ÜBERSCHRIFTEN** */
+.summary-heading {
+    font-size: 1.2em;
+    font-weight: bolder;
     margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-}
-
-#summaryOutput h2 {
-    margin-top: 0;
+    margin-bottom: 10px;
     color: #333;
-}
-
-/* **BLOCK ENTFERNT oder AUSKOMMENTIERT - NICHT MEHR BENÖTIGT FÜR ABSÄTZE** */
-/* #summaryList {
-    list-style-type: disc; /* Bullet Points
-    padding-left: 20px;
-} */
-
-
-/* **NEUER BLOCK FÜR ABSÄTZE IN #summaryOutput** */
-#summaryOutput p {
-    margin-bottom: 15px; /* Abstand nach jedem Absatz */
-    line-height: 1.6;    /* Zeilenabstand für bessere Lesbarkeit */
-    text-align: justify; /* Optional: Blocksatz für Absätze (kann auch entfernt werden, wenn nicht gewünscht) */
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
 }
