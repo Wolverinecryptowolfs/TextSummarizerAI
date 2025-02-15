@@ -29,20 +29,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let summaryText = data.summary;
 
-            // **Textbereinigung und Absatzstrukturierung**
+            // **Erweiterte Textbereinigung und Absatzstrukturierung**
 
-            // 1. Sterne (**) entfernen
-            summaryText = summaryText.replace(/\*\*/g, ''); // "**" global ersetzen durch nichts
+            // 1. Sterne (**) entfernen (wie gehabt)
+            summaryText = summaryText.replace(/\*\*/g, '');
 
-            // 2. Zeilenumbrüche in Absätze umwandeln (falls nicht schon Absätze vom API kommen)
+            // 2. Einzelne Sterne (*) am Zeilenanfang entfernen
+            summaryText = summaryText.replace(/^\*\s+/gm, ''); // Regex: ^\* = Zeilenanfang, \* = Stern, \s+ = ein oder mehr Leerzeichen, g = global, m = multiline
+
+            // 3. Zeilenumbrüche in Absätze umwandeln
             const summaryParagraphs = summaryText.split("\n").filter(paragraph => paragraph.trim() !== "");
 
             summaryOutput.innerHTML = ''; // Container leeren
 
             summaryParagraphs.forEach(paragraph => {
-                const summaryParagraph = document.createElement('p');
-                summaryParagraph.textContent = paragraph.trim(); // Leerzeichen am Anfang/Ende entfernen
+                // **Überschriften-Erkennung (einfach)**
+                let isHeading = false;
+                if (paragraph.trim().endsWith(':')) { // Annahme: Überschrift endet mit ":"
+                    isHeading = true;
+                }
+
+                const summaryParagraph = document.createElement(isHeading ? 'h3' : 'p'); // h3 für Überschriften, p für Absätze
+                summaryParagraph.textContent = paragraph.trim();
                 summaryOutput.appendChild(summaryParagraph);
+
+                if (isHeading) { // Optionale CSS-Klasse für Überschriften (für Styling)
+                    summaryParagraph.classList.add('summary-heading');
+                }
             });
 
 
