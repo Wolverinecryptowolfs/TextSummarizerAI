@@ -1,6 +1,5 @@
 {
     "version": 2,
-    "root": "frontend",
     "routes": [
         { "src": "/api/summarize", "dest": "api/summarize.js" },
         { "src": "/(.*)", "dest": "/index.html" }
