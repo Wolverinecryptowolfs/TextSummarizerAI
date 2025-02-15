@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "root": "frontend",
+    "routes": [
+        { "src": "/api/summarize", "dest": "api/summarize.js" },  // **Explizites Routing für die Function**
+        { "src": "/(.*)", "dest": "/index.html" }
+    ]
+}
