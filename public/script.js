@@ -7,15 +7,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const inputText = textInput.value;
 
         if (!inputText.trim()) {
-            alert("Please enter text to summarize.");
+            alert("Please enter text or a website URL to summarize."); // Angepasste Alert-Nachricht
             return;
+        }
+
+        let inputType = 'text'; // Standardmäßig Text annehmen
+        if (inputText.startsWith('http://') || inputText.startsWith('https://')) {
+            inputType = 'url'; // Wenn mit http:// oder https:// beginnt, ist es ein Link
         }
 
         try {
             const response = await fetch('/api/summarize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ text: inputText })
+                body: JSON.stringify({ inputType: inputType, inputData: inputText }) // **inputType und inputData mitschicken**
             });
 
             if (!response.ok) {
@@ -29,31 +34,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let summaryText = data.summary;
 
-            // **Erweiterte Textbereinigung und Absatzstrukturierung**
-
-            // 1. Sterne (**) entfernen (wie gehabt)
             summaryText = summaryText.replace(/\*\*/g, '');
+            summaryText = summaryText.replace(/^\*\s+/gm, '');
 
-            // 2. Einzelne Sterne (*) am Zeilenanfang entfernen
-            summaryText = summaryText.replace(/^\*\s+/gm, ''); // Regex: ^\* = Zeilenanfang, \* = Stern, \s+ = ein oder mehr Leerzeichen, g = global, m = multiline
-
-            // 3. Zeilenumbrüche in Absätze umwandeln
             const summaryParagraphs = summaryText.split("\n").filter(paragraph => paragraph.trim() !== "");
 
-            summaryOutput.innerHTML = ''; // Container leeren
-
+            summaryOutput.innerHTML = '';
             summaryParagraphs.forEach(paragraph => {
-                // **Überschriften-Erkennung (einfach)**
                 let isHeading = false;
-                if (paragraph.trim().endsWith(':')) { // Annahme: Überschrift endet mit ":"
+                if (paragraph.trim().endsWith(':')) {
                     isHeading = true;
                 }
 
-                const summaryParagraph = document.createElement(isHeading ? 'h3' : 'p'); // h3 für Überschriften, p für Absätze
+                const summaryParagraph = document.createElement(isHeading ? 'h3' : 'p');
                 summaryParagraph.textContent = paragraph.trim();
                 summaryOutput.appendChild(summaryParagraph);
 
-                if (isHeading) { // Optionale CSS-Klasse für Überschriften (für Styling)
+                if (isHeading) {
                     summaryParagraph.classList.add('summary-heading');
                 }
             });
