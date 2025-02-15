@@ -1,10 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     const summarizeButton = document.getElementById('summarizeButton');
     const textInput = document.getElementById('textInput');
-    const summaryList = document.getElementById('summaryList');
+    const summaryOutput = document.getElementById('summaryOutput'); // Direkt auf den Container zugreifen
 
-    summarizeButton.addEventListener('click', async () => { // **ASYNC HINZUGEFÜGT**
+    summarizeButton.addEventListener('click', async () => {
         const inputText = textInput.value;
+
+        if (!inputText.trim()) {
+            alert("Please enter text to summarize.");
+            return;
+        }
 
         try {
             const response = await fetch('/api/summarize', {
@@ -13,22 +18,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ text: inputText })
             });
 
-            if (!response.ok) { /* ... Fehlerbehandlung ... */ }
+            if (!response.ok) {
+                const errorData = await response.json();
+                const errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
+                throw new Error(errorMessage);
+            }
 
             const data = await response.json();
             console.log("Summary from API:", data);
 
-            const summaryText = data.summary; // Zusammenfassung aus API-Antwort
+            let summaryText = data.summary;
 
-            const summaryPoints = summaryText.split("\n").filter(point => point.trim() !== "");
+            // **Absatz-Ausgabe statt Bullet Points**
+            summaryOutput.innerHTML = ''; // Container leeren
+            const summaryParagraph = document.createElement('p'); // <p>-Tag erstellen
+            summaryParagraph.textContent = summaryText; // Zusammenfassungstext einfügen
+            summaryOutput.appendChild(summaryParagraph); // Absatz zum Container hinzufügen
 
-            summaryList.innerHTML = '';
-            summaryPoints.forEach(point => {
-                const listItem = document.createElement('li');
-                listItem.textContent = point;
-                summaryList.appendChild(listItem);
-            });
 
-        } catch (error) { /* ... Fehlerbehandlung ... */ }
+        } catch (error) {
+            console.error("Error calling summarize function:", error);
+            summaryOutput.innerHTML = `<p>Error fetching summary: ${error.message || 'Unknown error. Please try again later.'}</p>`; // Fehler als Absatz ausgeben
+        }
     });
 });
