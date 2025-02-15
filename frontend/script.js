@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('/api/summarize', { // **Aufruf der Vercel Function unter `/api/summarize`**
+            const response = await fetch('/api/summarize', { // **AUFRUF DER VERCEL FUNCTION UNTER `/api/summarize`**
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
