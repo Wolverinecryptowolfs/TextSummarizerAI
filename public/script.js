@@ -12,38 +12,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('/api/summarize', { // **AUFRUF DER VERCEL FUNCTION UNTER `/api/summarize`**
+            const response = await fetch('/api/summarize', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ text: inputText }) // Text im Request Body senden
+                body: JSON.stringify({ text: inputText })
             });
 
             if (!response.ok) {
-                const errorData = await response.json(); // Versuche Fehlerdetails aus JSON zu lesen
-                const errorMessage = errorData.message || `HTTP error! status: ${response.status}`; // Fallback-Fehlermeldung
+                const errorData = await response.json();
+                const errorMessage = errorData.message || `HTTP error! status: ${response.status}`;
                 throw new Error(errorMessage);
             }
 
             const data = await response.json();
-            console.log("Summary from API:", data); // Loggen der Antwort von der Function
+            console.log("Summary from API:", data);
 
-            const summaryText = data.summary; // Zusammenfassung aus der Antwort holen
+            let summaryText = "Error summarizing text.";
+            if (data.candidates && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0].text) {
+                summaryText = data.candidates[0].content.parts[0].text;
+            } else {
+                console.error("Unexpected API response structure:", data);
+                summaryList.innerHTML = '<li>Error processing summary.</li>';
+            }
 
+            // **Verbesserte Zusammenfassungsdarstellung (Neu!):**
             const summaryPoints = summaryText.split("\n").filter(point => point.trim() !== "");
 
-            summaryList.innerHTML = '';
+            summaryList.innerHTML = ''; // Liste leeren
             summaryPoints.forEach(point => {
-                const listItem = document.createElement('li');
-                listItem.textContent = point;
-                summaryList.appendChild(listItem);
+                // **Entferne doppelte Sterne (falls vorhanden) und trimme Leerzeichen (Neu!):**
+                const cleanPoint = point.replace(/^\*\*\s*/, '').trim(); // Entfernt "** " am Anfang und Leerzeichen
+
+                if (cleanPoint) { // Nur nicht-leere Punkte hinzufügen
+                    const listItem = document.createElement('li');
+                    listItem.textContent = cleanPoint;
+                    summaryList.appendChild(listItem);
+                }
             });
 
 
         } catch (error) {
             console.error("Error calling summarize function:", error);
-            summaryList.innerHTML = `<li>Error fetching summary: ${error.message || 'Unknown error. Please try again later.'}</li>`; // Fehler mit detaillierter Meldung anzeigen
+            summaryList.innerHTML = `<li>Error fetching summary: ${error.message || 'Unknown error. Please try again later.'}</li>`;
         }
     });
 });
