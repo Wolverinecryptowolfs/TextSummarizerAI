@@ -1,0 +1,14 @@
+try {
+    const response = await fetch(apiUrl, { /* ... */ });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response from Gemini:", data);  // **DIESE ZEILE HINZUFÜGEN!**
+    console.log("typeof data:", typeof data);      // **UND DIESE ZEILE auch!**
+
+    // ... Rest deines Codes ...
+
+} catch (error) { /* ... */ }
