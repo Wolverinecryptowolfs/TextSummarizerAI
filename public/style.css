@@ -56,7 +56,16 @@ button:hover {
     color: #333;
 }
 
-#summaryList {
-    list-style-type: disc; /* Bullet Points */
+/* **BLOCK ENTFERNT oder AUSKOMMENTIERT - NICHT MEHR BENÖTIGT FÜR ABSÄTZE** */
+/* #summaryList {
+    list-style-type: disc; /* Bullet Points
     padding-left: 20px;
+} */
+
+
+/* **NEUER BLOCK FÜR ABSÄTZE IN #summaryOutput** */
+#summaryOutput p {
+    margin-bottom: 15px; /* Abstand nach jedem Absatz */
+    line-height: 1.6;    /* Zeilenabstand für bessere Lesbarkeit */
+    text-align: justify; /* Optional: Blocksatz für Absätze (kann auch entfernt werden, wenn nicht gewünscht) */
 }
