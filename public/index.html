@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimal Test with CSS</title> <!- Geändert, um CSS-Test zu kennzeichnen -->
-    <link rel="stylesheet" href="frontend/style.css">  <- **CSS-LINK WIEDER AKTIVIERT!**
+    <title>TextSummarizerAI - Instant Content Summarizer | Free Online AI Text Summary Tool</title>
+<meta name="description" content="TextSummarizerAI: Free online AI-powered tool to summarize text and website articles instantly. Get concise summaries of long texts and save time. Super simple & effective!"> <!- **OPTIMIERTER `<meta description>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Test Header</h1>
-    <p>Test Paragraph</p>
+    <div class="container">
+        <h1>TextSummarizerAI</h1>
+        <textarea id="textInput" placeholder="Paste your text or website URL here..."></textarea> 
+        <button id="summarizeButton">Summarize</button>
+        <div id="summaryOutput">
+            <h2>Summary:</h2>
+            <!-- Zusammenfassungs-Absatz wird hier per JavaScript eingefügt -->
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
