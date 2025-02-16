@@ -73,3 +73,19 @@ button:hover {
     border-bottom: 2px solid #ddd;
     padding-bottom: 5px;
 }
+
+
+/* **NEUER CSS-CODE FÜR DEN FOOTER MUSS HIER EINGEFÜGT WERDEN!** */
+
+footer {  /* Stil für den Footer-Bereich */
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8em;      /* Kleinere Schriftgröße */
+    color: #777;          /* Graue Farbe */
+    margin-top: 20px;     /* Abstand zum Container oben */
+    border-top: 1px solid #eee; /* Dezenter oberer Rahmen */
+}
+
+.footer-text { /* Stil für den Text im Footer */
+    margin-bottom: 0; /* Kein Abstand nach unten im Absatz */
+}
